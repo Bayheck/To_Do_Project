@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 //import App from "../App";
 
 
-
 class Todo extends Component{
     constructor(props) {
         super(props);
@@ -12,7 +11,7 @@ class Todo extends Component{
                 {todo: "read a book"},
                 {todo: "go swimming"},
             ],
-            text : "Enter Your To-DOOooo..."
+            text : ""
         };
         this.handleDeleteTodo = this.handleDeleteTodo.bind(this);
         this.handleTodoChange = this.handleTodoChange.bind(this);
@@ -27,14 +26,17 @@ class Todo extends Component{
 
     render(){
         return(
-            <div className={"col-lg-1 col-m col-sm col-centered"}>
+            <div className={"col-lg-2  col-centered special"}>
                 <h1>Todo List</h1>
+                <hr/>
                 {this.listMaker()}
-
+                <br/>
                 <form onSubmit={this.formPreventDefault}>
-                    <input type="text" value = {this.state.text} onChange = {this.handleTodoChange}/>
+                    <input placeholder="Enter your todo" type="text" value = {this.state.text} onChange = {this.handleTodoChange}/>
                 </form>
-                <button onClick={this.handleAddTodo}  className={"btn btn-outline-danger btn-sm m-2"}>Add a Todo</button>
+                <br/>
+                <button onClick={this.handleAddTodo}  className={"btn btn-danger btn-lg m-2"}>Add a Todo</button>
+
             </div>
         )
     }
@@ -49,6 +51,9 @@ class Todo extends Component{
     }
 
     handleAddTodo(){
+        if(this.state.text === ''){
+            return;
+        }
         const temp = this.state.todos;
         temp.push({todo: this.state.text});
         this.setState({todos: temp, text : ''});
@@ -58,8 +63,7 @@ class Todo extends Component{
         const list = this.state.todos.map((todo,index) =>{
             return(
                 <React.StrictMode>
-                    <li key={index}>{todo.todo}</li>
-                    <button className={"btn btn-sm btn-warning"} onClick={() =>this.handleDeleteTodo(index)}>X</button>
+                    <li key={index}>{todo.todo} <button className={"btn btn-sm btn-danger m-2"} onClick={() =>this.handleDeleteTodo(index)}>X</button></li>
                 </React.StrictMode>
             );
         });
